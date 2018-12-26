@@ -19,7 +19,7 @@ def get_filter(category_name, cat_list):
         try:
             # Request category and provide options
             cat_input = str(input("Please enter a {0} ({1}): ".format(category_name, ', '.join(cat_list))))
-            
+
             # Test that the category is one of the options that can be accepted
             if cat_input.lower() in [category.lower() for category in cat_list]:
                 # Exit loop once we have category
@@ -27,7 +27,7 @@ def get_filter(category_name, cat_list):
             else:
                 # Unknown input
                 print("I don't know that {}".format(category_name))
-                                   
+
         except:
             # For any unexpected input, number, etc.
             print("I don't understand what you entered.")
@@ -46,13 +46,13 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     print('Hello! Let\'s explore some US bikeshare data!')
-    
+
     # Get list of acceptable inputs for each variable
     city_list = CITY_DATA.keys()
     month_list = ["All","January","February","March","April","May","June","July","August","September","October","November","December"]
     day_list = ["All","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-    
-    # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs    
+
+    # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     city = get_filter("city", city_list)
 
     # TO DO: get user input for month (all, january, february, ... , june)
@@ -65,7 +65,7 @@ def get_filters():
     return city, month, day
 
 
-def load_data(city, month, day):    
+def load_data(city, month, day):
     """
     Adopted directly from practice problem 3 per recommendation
     Loads data for the specified city and filters by month and day if applicable.
@@ -142,7 +142,7 @@ def time_stats(df):
         popular_hour_12 = popular_hour
     # Display
     print("Most frequent starting hour: {0} {1}".format(popular_hour_12, period))
-          
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -183,10 +183,10 @@ def seconds_to_dhms(seconds):
     h, m = divmod(m, 60)
     # Total days and hours remainder
     d, h = divmod(h, 24)
-    
+
     # Old-style string formatting
     return "%d days %d hours %02d minutes %02d seconds" % (d, h, m, s)
-    
+
 def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
 
@@ -222,7 +222,7 @@ def user_stats(df):
     # Get relative user type counts
     user_types_relative = df['User Type'].value_counts(normalize = True)
     print("Please note that gender and age demographics are only available for subscribers, who make up {0:.0%} of trips.".format(user_types_relative[0]))
-    
+
     # TO DO: Display counts of gender
     # Test for presence of column
     if 'Gender' in df.columns:
@@ -255,8 +255,16 @@ def rawdata_viewer(city):
 def next_n_lines(file_opened, N):
     """Use generator to return the next 5 lines of an open file with each function call"""
     return [x.strip() for x in islice(file_opened, N)]
-    
+
 def main():
+    """
+    Request city, month, and day filters from user.
+
+    Print time, route, duration, and user statistics about filtered data.
+
+    Allow user to page through unfiltered data for the selected city if desired.
+
+    """
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
@@ -264,8 +272,8 @@ def main():
         time_stats(df)
         station_stats(df)
         trip_duration_stats(df)
-        user_stats(df)        
-            
+        user_stats(df)
+
         raw_cycle = input('\nWould you like to see the unfiltered city data? Enter yes or no.\n')
         if raw_cycle.lower() == 'yes':
             # load file
@@ -280,7 +288,7 @@ def main():
                     keep_reading = input('\nDisplay the next 5 lines? Enter yes or no.\n')
                     if keep_reading.lower() != 'yes':
                         break
-            
+
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
