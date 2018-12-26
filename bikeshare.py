@@ -34,7 +34,7 @@ def get_filter(category_name, cat_list):
             # Return to the start of the input loop
             continue
 
-    return cat_input
+    return cat_input.lower()
 
 def get_filters():
     """
@@ -49,7 +49,7 @@ def get_filters():
 
     # Get list of acceptable inputs for each variable
     city_list = CITY_DATA.keys()
-    month_list = ["All","January","February","March","April","May","June","July","August","September","October","November","December"]
+    month_list = ["All","January","February","March","April","May","June"]
     day_list = ["All","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
 
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
